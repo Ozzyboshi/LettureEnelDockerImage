@@ -15,6 +15,11 @@ RUN composer config -g github-oauth.github.com aa9a906cf406370b509bbce3a78829202
 RUN composer update
 RUN a2enmod rewrite
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Publish port 80
+EXPOSE 80
+
+# Start apache in foreground
 CMD /usr/sbin/apache2ctl -D FOREGROUND
 
 
