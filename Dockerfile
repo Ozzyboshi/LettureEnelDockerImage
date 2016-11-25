@@ -16,6 +16,8 @@ RUN composer update
 RUN a2enmod rewrite
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+RUN a2ensite default-ssl.conf
+RUN a2enmod ssl
 
 # Publish port 80 and 443 for http and https
 EXPOSE 80 443
