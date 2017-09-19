@@ -44,9 +44,26 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
 docker exec -it some-mysql mysql -e "create database lettureenel" -pmy-secret-pw -u root --host localhost
 ```
 quindi procedere con il container che conterrà l'installazione vera e propria della applicazione web:
+-# Versione non sicura (HTTP su porta 80)
 ```
 docker run --name lettureenel -p 80:80 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage
+```
+
+-# Versione solo sicura (HTTPS su porta 443)
+```
+mkdir /web
+python -m SimpleHTTPServer 80 &
+docker run -v /web:/web -v /certs:/etc/letsencrypt/archive fauria/letsencrypt yourdomain --email youremail
+docker run --name lettureenel -v /certs/yourdomain:/etc/certdir -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d lettureenel /var/www/LettureEnel/start.sh secureonly```
+-# Entrambe le versioni
+
+```
+docker run --name lettureenel -p 80:80 -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage s
+tart 
+```
+
 docker exec -it lettureenel ./yii migrate
+docker exec -it lettureenel composer update
 ```
 
 
@@ -64,5 +81,5 @@ In questo momento non esiste una procedura di cancellazione utenti.
 
 ### Demo
 
-E' presente una demo online di questa applicazione all'indirizzo [http://lettureenel.ozzyboshi.com/](http://lettureenel.ozzyboshi.com/)
+E' presente una demo online di questa applicazione all'indirizzo [http://lettureeneldemo.ozzyboshi.com/](http://lettureenel.ozzyboshi.com/)
 
