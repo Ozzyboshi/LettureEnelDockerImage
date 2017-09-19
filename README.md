@@ -81,5 +81,5 @@ In questo momento non esiste una procedura di cancellazione utenti.
 
 ### Demo
 
-E' presente una demo online di questa applicazione all'indirizzo [http://lettureeneldemo.ozzyboshi.com/](http://lettureenel.ozzyboshi.com/)
+E' presente una demo online di questa applicazione all'indirizzo [https://lettureeneldemo.ozzyboshi.com/](https://lettureeneldemo.ozzyboshi.com/)
 
