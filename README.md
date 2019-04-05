@@ -52,14 +52,14 @@ docker run --name lettureenel -p 80:80 -e "DB_USER=root" -e "DB_PASS=my-secret-p
 -# Versione solo sicura (HTTPS su porta 443)
 ```
 mkdir /web
-python -m SimpleHTTPServer 80 &
+cd /web && python -m SimpleHTTPServer 80 &
 docker run -v /web:/web -v /certs:/etc/letsencrypt/archive fauria/letsencrypt yourdomain --email youremail
-docker run --name lettureenel -v /certs/yourdomain:/etc/certdir -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d lettureenel /var/www/LettureEnel/start.sh secureonly```
--# Entrambe le versioni
-
+docker run --name lettureenel -v /certs/yourdomain:/etc/certdir -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage /var/www/LettureEnel/start.sh secureonly
 ```
-docker run --name lettureenel -p 80:80 -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage s
-tart 
+
+-# Entrambe le versioni
+```
+docker run --name lettureenel -p 80:80 -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage start 
 ```
 
 docker exec -it lettureenel ./yii migrate
