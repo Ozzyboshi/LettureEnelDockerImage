@@ -62,6 +62,8 @@ docker run --name lettureenel -v /certs/yourdomain:/etc/certdir -p 443:443 -e "D
 docker run --name lettureenel -p 80:80 -p 443:443 -e "DB_USER=root" -e "DB_PASS=my-secret-pw" -e "DB_STRING=mysql:host=db;dbname=lettureenel" -e "DATALOGGER_URL=http://home1.solarlog-web.it/" --link some-mysql:db -d ozzyboshi/lettureeneldockerimage start 
 ```
 
+Infine terminare l'installazione con
+```
 docker exec -it lettureenel ./yii migrate
 docker exec -it lettureenel composer update
 ```
