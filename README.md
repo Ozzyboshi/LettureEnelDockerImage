@@ -42,7 +42,14 @@ Per installare la applicazione web usando docker occorre prima creare un contain
 ```
 docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
 docker exec -it some-mysql mysql -e "create database lettureenel" -pmy-secret-pw -u root --host localhost
+docker exec -it web_lettureenelmysql_1 mysql -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'my-secret-pw';" -pmy-secret-pw -u root --host localhost
 ```
+L'ultima istruzione è necessaria solo per Mysql8, nel caso vi renda questo errore in fase di migrate:
+```
+Exception 'yii\db\Exception' with message 'SQLSTATE[HY000] [2059] Authentication plugin 'caching_sha2_password' cannot be loaded: /usr/lib/mysql/plugin/caching_sha2_password.so: cannot open shared object file: No such file or directory'
+```
+
+
 quindi procedere con il container che conterrà l'installazione vera e propria della applicazione web:
 -# Versione non sicura (HTTP su porta 80)
 ```
